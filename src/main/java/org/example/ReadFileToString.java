@@ -10,7 +10,7 @@ public class ReadFileToString {
 
         try {
             String fileContent = readFileToString(filePath);
-            System.out.println("File content:\n" + fileContent);
+//            System.out.println("File content:\n" + fileContent);
             return fileContent;
 
         } catch (IOException e) {

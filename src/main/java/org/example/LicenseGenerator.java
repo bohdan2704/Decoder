@@ -9,21 +9,6 @@ public class LicenseGenerator
 {
 //    private static final String KEY = "419DD6D9EDA10AFCD7BB10BCDA124AE89";
 
-    public static void main(String[] args) {
-        try
-        {
-            {
-                System.out.println("===> Start generating...");
-
-                System.out.println(Encrypt("TEXT", "KEY"));
-
-                System.out.println("<=== End");
-            }
-        }
-        catch (Exception ex) {
-            System.out.println(ex.toString());
-        }
-    }
 
     public static String Encrypt(String plainText, String key) throws Exception {
         final Key a = createKey(getBytes(key));
