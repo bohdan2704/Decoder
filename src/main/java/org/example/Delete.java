@@ -30,13 +30,14 @@ public class Delete {
             // Check if the file exists
             if (fileToDelete.exists()) {
                 // Attempt to delete the file
-                if (fileToDelete.delete()) {
-                    System.out.println("File '" + folderPath + "' deleted successfully.");
-                } else {
-                    System.out.println("Unable to delete the file '" + folderPath + "'.");
-                }
-            } else {
-                System.out.println("File '" + folderPath + "' not found in the specified folder.");
+                fileToDelete.delete();
+//                if (fileToDelete.delete()) {
+//                    System.out.println("File '" + folderPath + "' deleted successfully.");
+//                } else {
+//                    System.out.println("Unable to delete the file '" + folderPath + "'.");
+//                }
+//            } else {
+//                System.out.println("File '" + folderPath + "' not found in the specified folder.");
             }
         } catch (Exception e) {
             System.out.println("An error occurred: " + e.getMessage());
