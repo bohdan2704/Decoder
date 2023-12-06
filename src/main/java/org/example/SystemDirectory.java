@@ -1,5 +1,9 @@
 package org.example;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 public class SystemDirectory {
 
     public static String get() {
@@ -14,5 +18,13 @@ public class SystemDirectory {
 
         System.out.println("Current Directory: " + currentDirectory);
         return currentDirectory;
+    }
+
+    public static void createFolder(String folderPath) {
+        try {
+            Files.createDirectories(Paths.get(folderPath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -3,7 +3,6 @@ package org.example;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -14,33 +13,34 @@ public class JarEncryptor {
     static String inputJarPath = SystemDirectory.getCurrentDirectory() + "\\Spacing.jar";
     static String encryptedJarPath = SystemDirectory.getCurrentDirectory() + "\\encrypted.jar";
     static String decryptedJarPath = SystemDirectory.get() + "\\SystemFiles\\decrypted.jar";
-    static String deleteFolder = SystemDirectory.get() + "\\SystemFiles";
-    public static void main(String[] args) throws IOException, InterruptedException {
+    static String folderInSystemDirectory = SystemDirectory.get() + "\\SystemFiles";
 
-        System.out.println(encrypt());
+    public static void main(String[] args) {
 
-    }
-
-    private static void run() throws IOException, InterruptedException {
-        JavaRunner.runJavaCode(decryptedJarPath);
+//        System.out.println(encrypt());
+        decrypt();
     }
 
     private static void decrypt() {
         // Generate a random AES key
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter license key: ");
         String licenseKeyInString = scanner.nextLine();
         licenseKeyInString = licenseKeyInString.replace("\n", "");
 
-        System.out.println("Enter license key: ");
         SecretKey secretKey = stringToSecretKey(licenseKeyInString);
         // Decrypt the JAR file
+        SystemDirectory.createFolder(folderInSystemDirectory);
         decryptJar(encryptedJarPath, decryptedJarPath, secretKey);
+        JavaRunner.runJavaCode(decryptedJarPath);
+        Delete.deleteFile(decryptedJarPath);
     }
 
-    private static String encrypt() {
+    public static String encrypt() {
         SecretKey secretKey = generateSecretKey();
         // Encrypt the JAR file
         encryptJar(inputJarPath, encryptedJarPath, secretKey);
+        assert secretKey != null;
         return secretKeyToString(secretKey);
     }
 
@@ -60,7 +60,7 @@ public class JarEncryptor {
             keyGenerator.init(128); // 128-bit key size
             return keyGenerator.generateKey();
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
             return null;
         }
     }
@@ -72,7 +72,7 @@ public class JarEncryptor {
 
             Files.write(Path.of(encryptedJarPath), encryptedBytes, StandardOpenOption.CREATE);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 
@@ -83,7 +83,7 @@ public class JarEncryptor {
             System.out.println(new String(decryptedBytes));
             Files.write(Path.of(decryptedJarPath), decryptedBytes, StandardOpenOption.CREATE);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println(e.getMessage());
         }
     }
 
